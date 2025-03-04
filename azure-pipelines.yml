@@ -1,25 +1,23 @@
 trigger: none
-- task: JenkinsQueueJob@2
-  inputs:
-    serverEndpoint: 'jenkins_user'
-    jobName: 'jenkins_queue'
-    captureConsole: true
-    capturePipeline: true
-- task: JenkinsDownloadArtifacts@2
-  inputs:
-    jenkinsServerConnection: 'jenkins_user'
-    jobName: 'jenkins'
-    saveTo: 'jenkinsArtifacts'
-    jenkinsBuild: 'LastSuccessfulBuild'
-    isParameterizedJob: false
 # - main
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: JenkinsQueueJob@2
+  inputs:
+    serverEndpoint: 'jenkins_user'
+    jobName: 'jenkins'
+    captureConsole: true
+    capturePipeline: true
+    isParameterizedJob: false
+- task: JenkinsDownloadArtifacts@2
+  inputs:
+    jenkinsServerConnection: 'jenkins_user'
+    jobName: 'jenkins'
+    saveTo: 'jenkinsArtifacts'
+    jenkinsBuild: 'LastSuccessfulBuild'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
