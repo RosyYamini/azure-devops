@@ -1,4 +1,17 @@
 trigger: none
+- task: JenkinsQueueJob@2
+  inputs:
+    serverEndpoint: 'jenkins_user'
+    jobName: 'jenkins_queue'
+    captureConsole: true
+    capturePipeline: true
+- task: JenkinsDownloadArtifacts@2
+  inputs:
+    jenkinsServerConnection: 'jenkins_user'
+    jobName: 'jenkins'
+    saveTo: 'jenkinsArtifacts'
+    jenkinsBuild: 'LastSuccessfulBuild'
+    isParameterizedJob: false
 # - main
 
 pool:
